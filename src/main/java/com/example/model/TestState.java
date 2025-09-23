@@ -1,4 +1,4 @@
-package com.sewingtest.model;
+package com.example.model;
 
 
 import java.util.ArrayList;
