@@ -1,0 +1,31 @@
+body.correct {
+    background-color: #ccffcc; /* Світло-зелений */
+}
+body.incorrect {
+    background-color: #ffcccc; /* Світло-червоний */
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+h1 {
+    color: #333;
+}
+img {
+    margin: 10px 0;
+}
+form {
+    margin-top: 20px;
+}
+input[type="submit"], a {
+    margin-top: 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+}
+input[type="submit"]:hover, a:hover {
+    background-color: #0056b3;
+}
