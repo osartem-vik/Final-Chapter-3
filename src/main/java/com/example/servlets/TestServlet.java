@@ -1,7 +1,7 @@
-package com.sewingtest.servlets;
+package com.example.servlets;
 
-import com.sewingtest.model.TestState;
-import com.sewingtest.util.TestLogic;
+import com.example.util.TestLogic;
+import com.example.model.TestState;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
