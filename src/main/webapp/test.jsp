@@ -25,8 +25,7 @@
         </c:if>
         <c:if test="${empty imagePath}">
             <p style="color: red;">Зображення для питання не знайдено! Шлях: ${imagePath}</p>
-            <img src="images/question6.png" alt="Статичне зображення для тесту" /> <!-- Статичний для перевірки -->
-        </c:if>
+                    </c:if>
         <form action="test" method="post">
             <c:forEach var="option" items="${com.example.util.TestLogic.getOptions(sessionScope.testState)}">
                 <label>
