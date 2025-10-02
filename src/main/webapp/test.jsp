@@ -20,12 +20,11 @@
             console.log("Full URL: '${pageContext.request.contextPath}/${imagePath}'");
         </script>
         <c:if test="${not empty imagePath}">
-            <img src="${pageContext.request.contextPath}/${imagePath}" alt="Зображення питання"
-                 onerror="console.log('Image failed to load: ${pageContext.request.contextPath}/${imagePath}'); this.src='${pageContext.request.contextPath}/images/placeholder.png';"/>
+            <img src="${pageContext.request.contextPath}/${imagePath}" alt="Зображення питання" onerror="console.log('Image failed to load: ${pageContext.request.contextPath}/${imagePath}'); this.src='${pageContext.request.contextPath}/images/placeholder.png';"/>
         </c:if>
         <c:if test="${empty imagePath}">
             <p style="color: red;">Зображення для питання не знайдено! Шлях: ${imagePath}</p>
-                    </c:if>
+        </c:if>
         <form action="test" method="post">
             <c:forEach var="option" items="${com.example.util.TestLogic.getOptions(sessionScope.testState)}">
                 <label>
@@ -38,6 +37,9 @@
     <c:if test="${sessionScope.testState.currentQuestionIndex >= 5 || sessionScope.testState.wrongAnswers >= 2}">
         <p>Тест завершено! <a href="result.jsp" class="button">Перейти до результатів</a></p>
     </c:if>
+</div>
+</body>
+</html>
 </div>
 </body>
 </html>

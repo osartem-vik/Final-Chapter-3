@@ -40,8 +40,8 @@ public class TestLogic {
             }
             System.out.println("TestLogic: JSON content length: " + jsonContent.length());
             if (jsonContent.length() == 0) {
-                System.out.println("TestLogic: JSON content is empty!");
-                return questions;
+                System.out.println("TestLogic: JSON content is empty! Using fallback questions.");
+                return createFallbackQuestions();
             }
             JSONArray jsonArray = new JSONArray(jsonContent.toString());
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -61,8 +61,17 @@ public class TestLogic {
         } catch (Exception e) {
             System.err.println("TestLogic: Error reading questions.json: " + e.getMessage());
             e.printStackTrace();
+            return createFallbackQuestions();
         }
         return questions;
+    }
+
+    private static List<Question> createFallbackQuestions() {
+        List<Question> fallback = new ArrayList<>();
+        fallback.add(new Question("Тестове питання 1", List.of("Опція 1", "Опція 2", "Опція 3", "Опція 4"), "Опція 1", "images/question1.png"));
+        fallback.add(new Question("Тестове питання 2", List.of("Опція 1", "Опція 2", "Опція 3", "Опція 4"), "Опція 2", "images/question2.png"));
+        System.out.println("TestLogic: Using fallback questions.");
+        return fallback;
     }
 
     public static void selectRandomQuestions(TestState state) {
@@ -72,42 +81,62 @@ public class TestLogic {
         }
         Collections.shuffle(indices);
         state.setSelectedQuestions(new ArrayList<>(indices.subList(0, Math.min(5, indices.size()))));
+        System.out.println("TestLogic: Selected questions: " + state.getSelectedQuestions());
     }
 
     public static String getQuestion(TestState state) {
-        if (QUESTIONS.isEmpty()) {
+        if (QUESTIONS.isEmpty() || state.getSelectedQuestions().isEmpty()) {
             return "Питання не завантажено (перевірте questions.json)";
         }
         int questionIndex = state.getSelectedQuestions().get(state.getCurrentQuestionIndex());
-        return QUESTIONS.get(questionIndex).questionText;
+        if (questionIndex < 0 || questionIndex >= QUESTIONS.size()) {
+            return "Помилка індексу питання";
+        }
+        String question = QUESTIONS.get(questionIndex).questionText;
+        System.out.println("TestLogic: getQuestion returned: " + question);
+        return question;
     }
 
     public static String[] getOptions(TestState state) {
-        if (QUESTIONS.isEmpty()) {
+        if (QUESTIONS.isEmpty() || state.getSelectedQuestions().isEmpty()) {
             return new String[]{"Опція 1", "Опція 2", "Опція 3"};
         }
         int questionIndex = state.getSelectedQuestions().get(state.getCurrentQuestionIndex());
-        return QUESTIONS.get(questionIndex).options.toArray(new String[0]);
+        if (questionIndex < 0 || questionIndex >= QUESTIONS.size()) {
+            return new String[]{"Опція 1", "Опція 2", "Опція 3"};
+        }
+        String[] options = QUESTIONS.get(questionIndex).options.toArray(new String[0]);
+        System.out.println("TestLogic: getOptions returned: " + java.util.Arrays.toString(options));
+        return options;
     }
 
     public static String getImage(TestState state) {
-        if (QUESTIONS.isEmpty()) {
+        if (QUESTIONS.isEmpty() || state.getSelectedQuestions().isEmpty()) {
             return "images/placeholder.png";
         }
         int questionIndex = state.getSelectedQuestions().get(state.getCurrentQuestionIndex());
+        if (questionIndex < 0 || questionIndex >= QUESTIONS.size()) {
+            return "images/placeholder.png";
+        }
         String imagePath = QUESTIONS.get(questionIndex).imagePath;
-        System.out.println("TestLogic: Returning image path: " + imagePath);
+        System.out.println("TestLogic: getImage returned: " + imagePath);
         return imagePath != null && !imagePath.isEmpty() ? imagePath : "images/placeholder.png";
     }
 
     public static void processAnswer(TestState state, String answer) {
-        if (QUESTIONS.isEmpty()) {
+        if (QUESTIONS.isEmpty() || state.getSelectedQuestions().isEmpty()) {
             state.setLastAnswerCorrect(false);
             state.setWrongAnswers(state.getWrongAnswers() + 1);
             state.setCurrentQuestionIndex(state.getCurrentQuestionIndex() + 1);
             return;
         }
         int questionIndex = state.getSelectedQuestions().get(state.getCurrentQuestionIndex());
+        if (questionIndex < 0 || questionIndex >= QUESTIONS.size()) {
+            state.setLastAnswerCorrect(false);
+            state.setWrongAnswers(state.getWrongAnswers() + 1);
+            state.setCurrentQuestionIndex(state.getCurrentQuestionIndex() + 1);
+            return;
+        }
         String correctAnswer = QUESTIONS.get(questionIndex).correctAnswer;
         boolean isCorrect = answer.equals(correctAnswer);
         state.setLastAnswerCorrect(isCorrect);
