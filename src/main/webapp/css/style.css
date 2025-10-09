@@ -1,31 +1,155 @@
-body.correct {
-    background-color: #ccffcc; /* Світло-зелений */
-}
-body.incorrect {
-    background-color: #ffcccc; /* Світло-червоний */
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
-h1 {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
     color: #333;
 }
-img {
+
+body.correct {
+    background-color: #e6ffed; /* М'який зелений для правильного відповіді */
+}
+
+body.incorrect {
+    background-color: #ffe6e6; /* М'який червоний для неправильної відповіді */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
     margin: 10px 0;
 }
-form {
-    margin-top: 20px;
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 20px auto;
+    border-radius: 8px;
 }
-input[type="submit"], a {
-    margin-top: 10px;
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    display: block;
+    font-size: 1rem;
     padding: 10px;
-    text-decoration: none;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+label:hover {
+    background-color: #e0e0e0;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="submit"], a.button {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 1rem;
     color: #fff;
     background-color: #007bff;
     border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
-input[type="submit"]:hover, a:hover {
+
+input[type="submit"]:hover, a.button:hover {
     background-color: #0056b3;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.progress {
+    height: 20px;
+    background-color: #28a745;
+    border-radius: 5px;
+    width: 0;
+    transition: width 0.3s;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.result-table th, .result-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.result-table th {
+    background-color: #f4f4f9;
+    font-weight: bold;
+}
+
+.result-table .correct {
+    color: #28a745;
+}
+
+.result-table .incorrect {
+    color: #dc3545;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    p, label {
+        font-size: 0.9rem;
+    }
+    input[type="submit"], a.button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
 }
